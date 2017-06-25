@@ -35,13 +35,9 @@ fX = [ones(m, 1) X];
 %       fmincg works similarly to fminunc, but is more efficient when we
 %       are dealing with large number of parameters.
 %
-% Example Code for fmincg:
-%
 
 % Set Initial theta
 initial_theta = zeros(num_labels, n + 1);
-% Set return values
-iterations = 0;
 
 % Set options for fminunc
 options = optimset('GradObj', 'on', 'MaxIter', 50);
@@ -49,7 +45,9 @@ options = optimset('GradObj', 'on', 'MaxIter', 50);
 % Run fmincg to obtain the optimal theta
 % This function will return theta and the cost 
 for c = 1:num_labels
-    [all_theta(c), fX, iterations] = fmincg (@(t)(lrCostFunction(initial_theta(c, :)', X, (y == c), lambda)), initial_theta(c, :), options);
+    [all_theta(c, :)] = ...
+        fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+        initial_theta(c, :)', options);
 end;
 
 

@@ -30,11 +30,12 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
-
-
-
-
-
+z = all_theta * X';
+possibility = sigmoid(z);
+for c = 1:m
+    [max_possibility, index] = max(possibility(:, c), [], 1);
+    p(c) = index;
+end;
 
 % =========================================================================
 
